@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>Test</title>
+</head>
+<body>
+  <h1>Socket.io Test</h1>
+  <button id="fav">Fav</button>
+  <div id="log"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+  const socket = io();
+  const favButton = document.getElementById('fav');
+  favButton.addEventListener('click', () => {
+    socket.emit('fav');
+  }, false);
+
+  socket.on('login', (data) => {
+    debug(data.value);
+  });
+  socket.on('fav', (data) => {
+    debug(data.value);
+  });
+
+  function debug(text) {
+    const logs = document.getElementById('log');
+    var log = document.createElement('p');
+    var now = new Date();
+    log.textContent = `[${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}] ${text}`;
+    logs.insertBefore(log, logs.firstChild);
+  }
+  </script>
+</body>
+</html>
